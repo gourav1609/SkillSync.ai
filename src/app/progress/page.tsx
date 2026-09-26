@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AppLayout from "@/components/AppLayout";
+import AdaptiveFlowStepper from "@/components/AdaptiveFlowStepper";
 import {
   TrendingUp,
   Award,
@@ -16,6 +17,7 @@ import {
   BarChart3,
   Loader2,
   Clock,
+  User,
 } from "lucide-react";
 
 interface ProgressItem {
@@ -105,17 +107,20 @@ export default function ProgressPage() {
   return (
     <AppLayout>
       <div className="max-w-4xl mx-auto space-y-6">
+        {/* Adaptive Stepper: Step 5 Progress Report */}
+        <AdaptiveFlowStepper currentStep={5} />
+
         {/* Header */}
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold mb-1 border border-indigo-100">
-            <TrendingUp className="w-3.5 h-3.5" />
-            <span>Learning Trajectory</span>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold mb-1 border border-cyan-400/30">
+            <TrendingUp className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Step 5: Verified Progress Report</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
             Your Progress & Growth
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            Real-time tracking of how each study session shifts your topic mastery.
+          <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+            Real-time verification of how your quiz performance and AI Tutor session shifted your mastery scores.
           </p>
         </div>
 
@@ -222,26 +227,26 @@ export default function ProgressPage() {
           </div>
         </div>
 
-        {/* Next Recommended Focus Card */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-indigo-900 to-indigo-800 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Next Recommended Action Card */}
+        <div className="p-6 rounded-2xl bg-[#081329]/95 border border-cyan-500/25 text-white shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[11px] font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
-              <Zap className="w-3.5 h-3.5" />
-              Next Recommended Focus
+            <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              Step 5 Complete &bull; Sync Profile
             </span>
-            <h3 className="text-lg font-bold">Transactions & Concurrency Control</h3>
-            <p className="text-xs text-indigo-200 max-w-md">
-              Normalization has reached 68% mastery. Your next highest-impact topic is Transactions (currently at 65%).
+            <h3 className="text-lg font-bold text-white">All Growth Data Ready to Synchronize</h3>
+            <p className="text-xs text-slate-300 max-w-md">
+              Your +26% improvement in Normalization and latest AI tutor interaction are ready to be permanently added to your Learning Profile.
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <Link
-              href="/tutor?topic=Transactions"
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-indigo-900 text-xs font-bold hover:bg-indigo-50 transition-colors shadow-sm"
+              href="/profile?updated=true"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/35 transition-all hover:scale-[1.02]"
             >
-              <span>Start Session</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <User className="w-4 h-4" />
+              <span>Next: Save & View Updated Profile ➔</span>
             </Link>
           </div>
         </div>

@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import AppLayout from "@/components/AppLayout";
+import AdaptiveFlowStepper from "@/components/AdaptiveFlowStepper";
 import {
   MessageSquare,
   Sparkles,
@@ -15,6 +17,8 @@ import {
   CheckCircle2,
   HelpCircle,
   Loader2,
+  TrendingUp,
+  ArrowRight,
   ChevronDown,
 } from "lucide-react";
 
@@ -113,17 +117,55 @@ function TutorContent() {
     }
   };
 
+  const fromPlan = searchParams.get("fromPlan") === "true";
+
   const tutorActions = [
-    { label: "Explain simply", prompt: `Explain ${currentTopic} simply with an everyday analogy.` },
-    { label: "Give example", prompt: `Give me a clear, concrete database schema example illustrating ${currentTopic}.` },
-    { label: "Give hint", prompt: `What is the key trick to avoid confusing 2NF with 3NF in exam questions?` },
-    { label: "Ask me a question", prompt: `Ask me a question to test my understanding of ${currentTopic}.` },
-    { label: "Quiz me", prompt: `Give me a short scenario question with 4 multiple choice options on ${currentTopic}.` },
+    { label: "Step 1: Explain Concept", prompt: `Explain ${currentTopic} simply with an everyday analogy as outlined in my learning plan.` },
+    { label: "Step 2: Show Schema Example", prompt: `Give me a clear, concrete database schema example illustrating ${currentTopic} and transitive dependencies.` },
+    { label: "Step 3: Test Understanding", prompt: `Ask me a scenario question to verify if I've mastered ${currentTopic}.` },
+    { label: "Give exam trick", prompt: `What is the key trick to avoid confusing 2NF with 3NF in exam questions?` },
   ];
 
   return (
     <AppLayout>
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-8rem)]">
+      <div className="space-y-4">
+        {/* Adaptive Stepper: Step 4 AI Tutor */}
+        <AdaptiveFlowStepper currentStep={4} />
+
+        {/* Plan Execution Banner */}
+        <div className="bg-[#081329]/95 border border-cyan-500/25 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 flex items-center justify-center flex-shrink-0">
+              <BookOpen className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider">
+                  Step 4: Executing Learning Plan
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 text-[10px] font-semibold border border-cyan-500/30">
+                  Active Tutor Session
+                </span>
+              </div>
+              <h2 className="text-base font-bold text-white mt-0.5">
+                Target Topic: {currentTopic} ({masteryScore}% Mastery)
+              </h2>
+              <p className="text-xs text-slate-300">
+                Your AI Tutor is executing the prioritized modules generated from your quiz results.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            href={`/progress?fromTutor=true&topic=${encodeURIComponent(currentTopic)}`}
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white text-xs font-bold shadow-lg shadow-emerald-500/30 transition-all hover:scale-[1.02] flex-shrink-0 text-center"
+          >
+            <TrendingUp className="w-4 h-4" />
+            <span>Next: View Progress Report ➔</span>
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[calc(100vh-14rem)]">
         {/* Left Side: Context Panel (AI knows the student) */}
         <div className="lg:col-span-1 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 flex flex-col justify-between overflow-y-auto">
           <div className="space-y-5">
@@ -315,7 +357,8 @@ function TutorContent() {
           </div>
         </div>
       </div>
-    </AppLayout>
+    </div>
+  </AppLayout>
   );
 }
 

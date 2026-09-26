@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AppLayout from "@/components/AppLayout";
+import AdaptiveFlowStepper from "@/components/AdaptiveFlowStepper";
 import {
   BookOpen,
   Sparkles,
@@ -120,57 +121,62 @@ export default function PlanPage() {
     );
   }
 
+  const primaryTopic = plan?.items[0]?.topic || "Normalization";
+
   return (
     <AppLayout>
       <div className="max-w-4xl mx-auto space-y-6">
+        {/* Adaptive Stepper: Step 3 Learning Plan */}
+        <AdaptiveFlowStepper currentStep={3} />
+
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold mb-1 border border-indigo-100">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>AI-Generated Daily Roadmap</span>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold mb-1 border border-cyan-400/30">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Step 3: AI-Generated Daily Roadmap</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
               Personalized Learning Plan
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Targeted modules arranged by priority to fix your conceptual gaps efficiently.
+            <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+              Constructed directly from your quiz results — prioritized to target your exact weak topics.
             </p>
           </div>
 
           <button
             onClick={handleRegenerate}
             disabled={regenerating}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#091530] border border-cyan-500/20 text-xs font-semibold text-slate-300 hover:text-white hover:bg-cyan-500/10 shadow-sm transition-colors disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${regenerating ? "animate-spin text-indigo-600" : "text-slate-400"}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${regenerating ? "animate-spin text-cyan-400" : "text-slate-400"}`} />
             <span>{regenerating ? "Recalibrating..." : "Recalibrate Plan"}</span>
           </button>
         </div>
 
         {/* Plan Header Card */}
-        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-[#081329]/90 border border-cyan-500/25 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xl">
           <div className="space-y-1">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-              Active Focus
+            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-wider block">
+              Active Focus &bull; Priority 1
             </span>
-            <h2 className="text-lg font-bold text-slate-900">{plan?.title}</h2>
-            <div className="flex items-center gap-3 text-xs text-slate-500 pt-1">
+            <h2 className="text-lg font-bold text-white">{plan?.title}</h2>
+            <div className="flex items-center gap-3 text-xs text-slate-300 pt-1">
               <span className="flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-slate-400" />
-                Est. Duration: <strong className="text-slate-700">{plan?.estimatedDuration}</strong>
+                <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                Est. Duration: <strong className="text-white">{plan?.estimatedDuration}</strong>
               </span>
               <span>•</span>
-              <span className="text-indigo-600 font-semibold">{plan?.items.length} Structured Modules</span>
+              <span className="text-cyan-300 font-semibold">{plan?.items.length} Targeted Modules</span>
             </div>
           </div>
 
           <Link
-            href="/practice"
-            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-100 transition-all flex-shrink-0"
+            href={`/tutor?topic=${encodeURIComponent(primaryTopic)}&fromPlan=true`}
+            className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/35 transition-all flex-shrink-0 hover:scale-[1.02]"
           >
-            <Zap className="w-4 h-4 fill-current" />
-            <span>Start Practice Today</span>
+            <MessageSquare className="w-4 h-4" />
+            <span>Next: Execute Plan with AI Tutor ➔</span>
           </Link>
         </div>
 
@@ -223,16 +229,16 @@ export default function PlanPage() {
                   {/* Actions for this item */}
                   <div className="flex sm:flex-col items-center sm:items-end gap-2 flex-shrink-0 pt-2 sm:pt-0">
                     <Link
-                      href={`/tutor?topic=${encodeURIComponent(item.topic)}`}
-                      className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 text-xs font-semibold transition-colors"
+                      href={`/tutor?topic=${encodeURIComponent(item.topic)}&fromPlan=true`}
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30 border border-cyan-400/30 text-xs font-semibold transition-colors"
                     >
                       <MessageSquare className="w-3.5 h-3.5" />
-                      <span>Learn with AI Tutor</span>
+                      <span>Execute with AI Tutor</span>
                     </Link>
 
                     <Link
                       href="/practice"
-                      className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 text-xs font-semibold transition-colors"
+                      className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0a1530] text-slate-300 hover:text-white border border-cyan-500/20 text-xs font-semibold transition-colors"
                     >
                       <HelpCircle className="w-3.5 h-3.5" />
                       <span>Practice Quiz</span>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import AppLayout from "@/components/AppLayout";
+import AdaptiveFlowStepper from "@/components/AdaptiveFlowStepper";
 import {
   HelpCircle,
   Zap,
@@ -265,18 +266,21 @@ export default function PracticePage() {
     return (
       <AppLayout>
         <div className="max-w-3xl mx-auto space-y-6">
+          {/* Adaptive Stepper: Step 2 Result */}
+          <AdaptiveFlowStepper currentStep={2} />
+
           {/* Loop Result Banner */}
           <div className="bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-950 text-white rounded-2xl p-6 sm:p-8 shadow-lg text-center relative overflow-hidden">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold mb-3 border border-emerald-400/30">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Adaptive Loop Completed</span>
+              <span>Step 2: Quiz Evaluated & Results Ready</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               Adaptive Practice Complete!
             </h1>
             <p className="text-xs sm:text-sm text-indigo-200 mt-1 max-w-md mx-auto">
-              Your performance has recalculated your mastery levels and unlocked your next recommendation.
+              Your performance has recalculated your mastery levels. Now generate your targeted learning plan!
             </p>
 
             <div className="mt-6 flex items-center justify-center gap-8 border-t border-indigo-700/50 pt-6">
@@ -337,8 +341,7 @@ export default function PracticePage() {
                 Updated Next Recommendation:
               </span>
               <p className="text-xs text-indigo-950 font-medium">
-                You improved in Normalization from <strong>42% → 68%</strong>! Your next highest priority is now{" "}
-                <strong>Transactions (ACID & Isolation Levels)</strong>.
+                You improved in Normalization from <strong>42% → 68%</strong>! Your personalized learning plan is calibrated and ready to execute with AI Tutor.
               </p>
             </div>
           </div>
@@ -382,19 +385,13 @@ export default function PracticePage() {
               <span>Practice Again</span>
             </button>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
               <Link
-                href="/tutor?topic=Transactions"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-100 transition-all text-center"
+                href="/plan?fromQuiz=true"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/35 transition-all text-center hover:scale-[1.02]"
               >
-                <span>Tackle Transactions</span>
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/dashboard"
-                className="flex-1 sm:flex-none flex items-center justify-center px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold text-center transition-colors"
-              >
-                Dashboard
+                <span>Next: View Learning Plan Based On Result</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -409,6 +406,8 @@ export default function PracticePage() {
   return (
     <AppLayout>
       <div className="max-w-2xl mx-auto space-y-6">
+        {/* Adaptive Stepper: Step 1 Quiz */}
+        <AdaptiveFlowStepper currentStep={1} />
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

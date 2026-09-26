@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import AppLayout from "@/components/AppLayout";
+import AdaptiveFlowStepper from "@/components/AdaptiveFlowStepper";
 import {
   Sparkles,
   Zap,
@@ -189,6 +190,9 @@ export default function DashboardPage() {
   return (
     <AppLayout>
       <div className="space-y-6">
+        {/* Adaptive Flow Stepper */}
+        <AdaptiveFlowStepper currentStep={1} />
+
         {/* Welcome Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
@@ -196,7 +200,7 @@ export default function DashboardPage() {
               Good morning, {user?.name?.split(" ")[0] || "Student"} <span className="animate-pulse">👋</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
-              Here is your adaptive learning plan based on your latest performance.
+              Welcome to your adaptive education workspace. Start your quiz to generate today&apos;s personalized plan.
             </p>
           </div>
 
@@ -206,7 +210,7 @@ export default function DashboardPage() {
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0a142c] border border-cyan-500/25 text-xs font-semibold text-slate-200 hover:text-white hover:border-cyan-500/50 shadow-sm transition-all"
             >
               <RefreshCwIcon className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Retake Diagnostic</span>
+              <span>Full Diagnostic</span>
             </Link>
 
             <Link
@@ -219,7 +223,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Primary Recommendation Card: "Your next best step" */}
+        {/* Primary Recommendation Card: "Step 1 of Adaptive Cycle" */}
         <div className="p-6 rounded-3xl bg-gradient-to-br from-[#06203a] via-[#08152b] to-[#040814] text-white shadow-2xl border border-cyan-500/35 relative overflow-hidden">
           <div className="absolute right-0 top-0 translate-x-8 -translate-y-8 w-60 h-60 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
 
@@ -227,32 +231,32 @@ export default function DashboardPage() {
             <div className="space-y-2 max-w-xl">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[11px] font-semibold border border-cyan-400/30 shadow-[0_0_12px_rgba(6,182,212,0.3)]">
                 <Sparkles className="w-3 h-3 text-cyan-400" />
-                <span>Your Next Best Step</span>
+                <span>Step 1: Adaptive Evaluation</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-[0_0_20px_rgba(6,182,212,0.35)]">
-                Master {primaryWeakTopic.topicName} Fundamentals
+                Start Today&apos;s Adaptive Evaluation Quiz
               </h2>
               <p className="text-xs sm:text-sm text-slate-200/80 leading-relaxed">
-                Your diagnostic assessment identified {primaryWeakTopic.topicName} ({primaryWeakTopic.score}% mastery)
-                as the highest-leverage area to improve. Start with a 10-minute AI Tutor session.
+                Click <strong className="text-cyan-300">Continue Learning</strong> below to start your targeted quiz on {primaryWeakTopic.topicName}. Upon submission, AI will instantly calculate your results, build your study plan, and launch the AI Tutor!
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
-                href={`/tutor?topic=${encodeURIComponent(primaryWeakTopic.topicName)}`}
-                className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/35 transition-all text-center hover:scale-[1.02]"
+                href="/practice"
+                className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-sky-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-bold shadow-lg shadow-cyan-500/35 transition-all text-center hover:scale-[1.02]"
               >
-                <MessageSquare className="w-4 h-4" />
-                <span>Continue Learning</span>
+                <Zap className="w-4 h-4 fill-current animate-pulse text-white" />
+                <span>Continue Learning (Start Quiz)</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
 
               <Link
-                href="/practice"
+                href="/assessment"
                 className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#0c1833] hover:bg-[#102247] border border-cyan-500/30 text-cyan-200 hover:text-white text-xs font-semibold transition-all text-center hover:border-cyan-500/60"
               >
                 <HelpCircle className="w-4 h-4 text-cyan-400" />
-                <span>5-min Quiz</span>
+                <span>10-Q Diagnostic</span>
               </Link>
             </div>
           </div>

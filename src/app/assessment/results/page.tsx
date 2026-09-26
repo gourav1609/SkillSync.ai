@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
+import AdaptiveFlowStepper from "@/components/AdaptiveFlowStepper";
 import {
   Zap,
   Sparkles,
@@ -159,6 +160,9 @@ function ResultsContent() {
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
+        {/* Adaptive Stepper: Step 2 Result */}
+        <AdaptiveFlowStepper currentStep={2} />
+
         {/* Header */}
         <div className="text-center">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold mb-3 border border-emerald-200">
@@ -326,11 +330,12 @@ function ResultsContent() {
 
           <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
             <Link
-              href="/plan"
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-indigo-900 text-xs font-bold hover:bg-indigo-50 transition-colors shadow-sm"
+              href="/plan?fromAssessment=true"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-sky-300 hover:from-cyan-300 hover:to-sky-200 text-slate-950 text-xs font-extrabold transition-all shadow-md hover:scale-[1.02]"
             >
               <BookOpen className="w-4 h-4" />
-              <span>Personalized Plan</span>
+              <span>Next: View Learning Plan Based on Results</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
 
             <Link
@@ -339,14 +344,6 @@ function ResultsContent() {
             >
               <MessageSquare className="w-4 h-4" />
               <span>AI Tutor ({weakestTopic})</span>
-            </Link>
-
-            <Link
-              href="/dashboard"
-              className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-indigo-200 hover:text-white text-xs font-medium"
-            >
-              <span>Dashboard</span>
-              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
