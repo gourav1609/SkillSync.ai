@@ -28,7 +28,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ user }, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: "An unexpected error occurred." }, { status: 500 });
+  } catch (error) {
+    console.error("REGISTER ERROR:", error);
+    return NextResponse.json({ error: "An unexpected error occurred.", details: String(error) }, { status: 500 });
   }
 }

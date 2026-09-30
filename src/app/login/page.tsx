@@ -40,8 +40,7 @@ export default function LoginPage() {
       if (res?.error) {
         setError("Sign-in failed. Please check your credentials or try again.");
       } else {
-        router.push("/dashboard");
-        router.refresh();
+        window.location.href = "/dashboard";
       }
     } catch {
       setError("An unexpected error occurred. Please try again.");
@@ -54,18 +53,18 @@ export default function LoginPage() {
     setError("");
     setDemoLoading(true);
     try {
-      const regRes = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: "Alex Rivera",
-          email: "alex@skillsync.ai",
-          password: "password123",
-        }),
-      });
-
-      if (!regRes.ok && regRes.status !== 409) {
-        console.warn("Demo account setup note:", await regRes.text());
+      try {
+        await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: "Alex Rivera",
+            email: "alex@skillsync.ai",
+            password: "password123",
+          }),
+        });
+      } catch (e) {
+        console.warn("Pre-register note:", e);
       }
 
       const res = await signIn("credentials", {
@@ -75,10 +74,9 @@ export default function LoginPage() {
       });
 
       if (res?.error) {
-        setError("Demo sign-in failed. Please try registering normally.");
+        setError("Demo sign-in failed. Please try entering your email directly.");
       } else {
-        router.push("/dashboard");
-        router.refresh();
+        window.location.href = "/dashboard";
       }
     } catch {
       setError("Failed to initialize demo mode.");
